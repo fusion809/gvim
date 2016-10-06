@@ -1,11 +1,7 @@
 # Maintainer: Brenton Horne <brentonhorne77 at gmail dot com>
 
-# Interpreters are handled by value "dynamic" of configure options
-# '--enable-<language>interp' and can thus be chosen at runtime by installing appropriate
-# packages. Counterpart of Vim packages '-python3' no longer needed, IMHO.
-
 _pkgname=vim
-pkgname=gvim
+pkgname=gvim-gtk2
 pkgver=8.0.0022
 pkgrel=1
 pkgdesc="Vim, the text editor. CLI version and GTK2 GUI providing majority of features."
