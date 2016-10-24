@@ -12,29 +12,30 @@ depends=("gtk2" "hicolor-icon-theme" "gtk-update-icon-cache" "desktop-file-utils
 optdepends=("lua: Lua interpreter" "perl: Perl interpreter" "python: Python 3 interpreter"
             "python2: Python 2 interpreter" "ruby: Ruby interpreter")
 makedepends=("git" "lua" "python" "python2" "ruby")
-provides=("gvim" "xxd" "vim-runtime")
+provides=("gvim=$pkgver" "xxd" "vim-runtime=$pkgver" "vim=$pkgver")
 conflicts=("vim-minimal-git" "vim-git" "vim-runtime" "vim-runtime-git"
-           "vim-minimal" "vim" "vim-python3" "gvim" "gvim-python3")
-source=("git+https://github.com/vim/vim.git#tag=v$pkgver"
+           "vim-minimal" "vim" "vim-python3" "gvim" "gvim-gtk3" "gvim-python3" "gvim-git")
+source=("https://github.com/vim/vim/archive/v$pkgver.tar.gz"
+        "vimrc"
+        "archlinux.vim"
         "gvim.desktop")
-sha256sums=('SKIP'
-            'b21fa0e4f63c6dc37be4cd5a7b938085449d02596c0dd0e8003cc3ab6277d4d4')
+backup=('etc/vimrc')
+sha256sums=('a768d3b959c44c6084c1c745012766a537303c687f8869d3e877c5a25cc812f4'
+            'b16e85e457397ab2043a7ee0a3c84307c6b4eac157fd0b721694761f25b3ed5b'
+            '0cf8b42732111d0c66c3908a76d832736e8f8dc3abef81cb092ddf84cb862ea2'
+            '9f1c00aa96458caa2cdfc02164e58bc08bcfcbe5aa95dc618d2fc7e1b12b9a12')
 install=gvim.install
 
-pkgver() {
-  cd "${srcdir}/${_pkgname}"
-  git describe --tags `git rev-list --tags --max-count=1` | sed 's/v//g'
-}
-
 prepare() {
-    SRC="$srcdir/${_pkgname}"
+    SRC="$srcdir/${_pkgname}-$pkgver"
     cd $SRC
     # set global configuration files to /etc/[g]vimrc
     sed -i 's|^.*\(#define SYS_.*VIMRC_FILE.*"\) .*$|\1|' src/feature.h
+    sed -i 's|^.*\(#define VIMRC_FILE.*"\) .*$|\1|' src/feature.h
 }
 
 build() {
-    SRC="$srcdir/${_pkgname}"
+    SRC="$srcdir/${_pkgname}-$pkgver"
     cd $SRC
     ./configure \
       --enable-fail-if-missing \
@@ -54,26 +55,31 @@ build() {
 }
 
 package() {
-    SRC="$srcdir/${_pkgname}"
-    # actual installation
-    cd $SRC
-    make DESTDIR=$pkgdir install
-    cd -
-    pv="${_pkgname}"
+  SRC="$srcdir/${_pkgname}-$pkgver"
+  # actual installation
+  cd $SRC
+  make DESTDIR=$pkgdir install
+  cd ..
+  pv="${_pkgname}-$pkgver"
 
-    # desktop entry file and corresponding icon
-    install -Dm644 ../gvim.desktop      $pkgdir/usr/share/applications/gvim.desktop
-    install -Dm644 $pv/runtime/vim48x48.png $pkgdir/usr/share/icons/hicolor/48x48/apps/gvim.png
+  # desktop entry file and corresponding icon
+  install -Dm644 ../gvim.desktop      $pkgdir/usr/share/applications/gvim.desktop
+  install -Dm644 $pv/runtime/vim48x48.png $pkgdir/usr/share/icons/hicolor/48x48/apps/gvim.png
 
-    # remove ex/view and man pages (normally provided by package 'vi' on Arch Linux)
-    cd $pkgdir/usr/bin ; rm ex view
-    find $pkgdir/usr/share/man -type d -name 'man1' 2>/dev/null | \
-      while read _mandir; do
-        cd ${_mandir}
-        rm -f ex.1 view.1
-      done
+  # rc files
+  install -Dm644 "${srcdir}"/vimrc "${pkgdir}"/etc/vimrc
+  install -Dm644 "${srcdir}"/archlinux.vim \
+    "${pkgdir}"/usr/share/vim/vimfiles/archlinux.vim
 
-    # add license
-    install -Dm644 $SRC/runtime/doc/uganda.txt \
-      $pkgdir/usr/share/licenses/$pkgname/LICENSE
+  # remove ex/view and man pages (normally provided by package 'vi' on Arch Linux)
+  cd $pkgdir/usr/bin ; rm ex view
+  find $pkgdir/usr/share/man -type d -name 'man1' 2>/dev/null | \
+    while read _mandir; do
+      cd ${_mandir}
+      rm -f ex.1 view.1
+    done
+
+  # add license
+  install -Dm644 $SRC/runtime/doc/uganda.txt \
+    $pkgdir/usr/share/licenses/$pkgname/LICENSE
 }
