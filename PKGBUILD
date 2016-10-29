@@ -20,7 +20,7 @@ source=("https://github.com/vim/vim/archive/v$pkgver.tar.gz"
         "archlinux.vim"
         "gvim.desktop")
 backup=('etc/vimrc')
-sha256sums=('a768d3b959c44c6084c1c745012766a537303c687f8869d3e877c5a25cc812f4'
+sha256sums=('f2cf1d2bc77f90f6a529972f32409b56202a494345eab82a3ca64ddbe68d4627'
             'b16e85e457397ab2043a7ee0a3c84307c6b4eac157fd0b721694761f25b3ed5b'
             '0cf8b42732111d0c66c3908a76d832736e8f8dc3abef81cb092ddf84cb862ea2'
             '9f1c00aa96458caa2cdfc02164e58bc08bcfcbe5aa95dc618d2fc7e1b12b9a12')
