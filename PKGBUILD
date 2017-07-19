@@ -1,8 +1,8 @@
-# Maintainer: Brenton Horne <brentonhorne77 at gmail dot com>
+# Maintainer: Brenton Horne <fuse809 at gmail dot com>
 
 _pkgname=vim
 pkgname=gvim-gtk2
-pkgver=8.0.0714
+pkgver=8.0.0730
 pkgrel=1
 pkgdesc="Vim, the text editor. CLI version and GTK2 GUI providing majority of features."
 arch=("i686" "x86_64")
