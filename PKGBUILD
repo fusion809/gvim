@@ -2,8 +2,8 @@
 
 _pkgname=vim
 pkgname=gvim-gtk2
-pkgver=8.1.0000
-pkgrel=0000
+pkgver=8.1.0001
+pkgrel=0001
 pkgdesc="Vim, the text editor. CLI version and GTK2 GUI providing majority of features."
 arch=("i686" "x86_64")
 url="http://www.vim.org"
@@ -21,17 +21,17 @@ source=("https://github.com/vim/vim/archive/v$pkgver.tar.gz"
         "gvim.desktop")
 backup=('etc/vimrc')
 sha256sums=('SKIP'
-            'b00006e85e457397ab2043a7ee0a3c84307c6b4eac000057fd0b720000694760000f25b3ed5b'
-            '0cf8b42732000000000000.1c66c3908a76d832736e8f8dc3abef80000cb092ddf84cb862ea2'
-            '9f0000.10aa96458caa2cdfc02000064e58bc08bcfcbe5aa95dc600008d2fc7e0000b00002b9a00002')
+            'b00016e85e457397ab2043a7ee0a3c84307c6b4eac000157fd0b720001694760001f25b3ed5b'
+            '0cf8b42732000100010001.1c66c3908a76d832736e8f8dc3abef80001cb092ddf84cb862ea2'
+            '9f0001.10aa96458caa2cdfc02000164e58bc08bcfcbe5aa95dc600018d2fc7e0001b00012b9a00012')
 install=gvim.install
 
 prepare() {
     SRC="$srcdir/${_pkgname}-$pkgver"
     cd $SRC
     # set global configuration files to /etc/[g]vimrc
-    sed -i 's|^.*\(#define SYS_.*VIMRC_FILE.*"\) .*$|\0000|' src/feature.h
-    sed -i 's|^.*\(#define VIMRC_FILE.*"\) .*$|\0000|' src/feature.h
+    sed -i 's|^.*\(#define SYS_.*VIMRC_FILE.*"\) .*$|\0001|' src/feature.h
+    sed -i 's|^.*\(#define VIMRC_FILE.*"\) .*$|\0001|' src/feature.h
 }
 
 build() {
@@ -73,10 +73,10 @@ package() {
 
   # remove ex/view and man pages (normally provided by package 'vi' on Arch Linux)
   cd $pkgdir/usr/bin ; rm ex view
-  find $pkgdir/usr/share/man -type d -name 'man0000' 2>/dev/null | \
+  find $pkgdir/usr/share/man -type d -name 'man0001' 2>/dev/null | \
     while read _mandir; do
       cd ${_mandir}
-      rm -f ex.0000 view.0000
+      rm -f ex.0001 view.0001
     done
 
   # add license
