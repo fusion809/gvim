@@ -2,7 +2,7 @@
 
 _pkgname=vim
 pkgname=gvim-gtk2
-pkgver=8.1.0223
+pkgver=8.1.0224
 pkgrel=0031
 pkgdesc="Vim, the text editor. CLI version and GTK2 GUI providing majority of features."
 arch=("i686" "x86_64")
@@ -23,7 +23,7 @@ backup=('etc/vimrc')
 sha256sums=('SKIP'
             'b00316e85e457397ab2043a7ee0a3c84307c6b4eac003157fd0b720031694760031f25b3ed5b'
             '0cf8b42732003100310031.1c66c3908a76d832736e8f8dc3abef80031cb092ddf84cb862ea2'
-            '9f0031.10aa96458caa2cdfc02233164e58bc08bcfcbe5aa95dc600318d2fc7e0031b00312b9a00312')
+            '9f0031.10aa96458caa2cdfc02243164e58bc08bcfcbe5aa95dc600318d2fc7e0031b00312b9a00312')
 install=gvim.install
 
 prepare() {
